@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Panel — Godhuli Bangla</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'gold':  { 400: '#daa520', 500: '#b8860b' },
+                    'navy':  { 900: '#080f1f', 950: '#030712' }
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        background: #080f1f;
+        color: #d4c9b8;
+        font-family: 'Segoe UI', sans-serif;
+        min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+        background: #030712;
+        border-right: 1px solid rgba(218,165,32,0.15);
+        width: 240px;
+        min-height: 100vh;
+        position: fixed;
+        top: 0; left: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+    }
+    .main-content {
+        margin-left: 240px;
+        padding: 28px;
+        min-height: 100vh;
+    }
+
+    /* ── Stat cards ── */
+    .stat-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(218,165,32,0.15);
+        border-radius: 16px;
+        padding: 20px;
+        transition: all 0.3s;
+    }
+    .stat-card:hover { border-color: rgba(218,165,32,0.4); transform: translateY(-2px); }
+
+    /* ── Tables ── */
+    .table-wrap {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(218,165,32,0.12);
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    table  { width: 100%; border-collapse: collapse; }
+    thead  { background: rgba(218,165,32,0.08); }
+    th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #daa520;
+        font-weight: 600;
+    }
+    td {
+        padding: 14px 16px;
+        font-size: 13px;
+        border-top: 1px solid rgba(255,255,255,0.04);
+        color: #c9b99a;
+        vertical-align: middle;
+    }
+    tr:hover td { background: rgba(218,165,32,0.03); }
+
+    /* ── Badges ── */
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    .badge-pending  { background: rgba(234,179,8,0.15);  color: #fbbf24; border: 1px solid rgba(234,179,8,0.3); }
+    .badge-approved { background: rgba(34,197,94,0.15);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+    .badge-rejected { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .badge-personal { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+    .badge-partner  { background: rgba(218,165,32,0.15); color: #daa520; border: 1px solid rgba(218,165,32,0.3); }
+
+    /* ── Buttons ── */
+    .btn-approve {
+        background: rgba(34,197,94,0.15);
+        border: 1px solid rgba(34,197,94,0.3);
+        color: #4ade80;
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+    .btn-approve:hover { background: rgba(34,197,94,0.3); }
+    .btn-reject {
+        background: rgba(239,68,68,0.15);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #f87171;
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+    .btn-reject:hover  { background: rgba(239,68,68,0.3); }
+
+    /* ── Tab buttons ── */
+    .tab-btn {
+        padding: 8px 20px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        color: #9a8c7c;
+        background: transparent;
+    }
+    .tab-btn.active {
+        background: rgba(218,165,32,0.15);
+        border-color: rgba(218,165,32,0.4);
+        color: #daa520;
+    }
+    .tab-btn:hover:not(.active) { color: #d4c9b8; }
+
+    /* ── Sections ── */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .shimmer-line {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(218,165,32,0.4), transparent);
+        margin: 24px 0;
+    }
+
+    /* ── Nav buttons ── */
+    .nav-btn {
+        background: transparent;
+        color: #9a8c7c;
+        border-radius: 12px;
+        transition: all 0.2s;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+    }
+    .nav-btn:hover   { background: rgba(218,165,32,0.07); color: #d4c9b8; }
+    .nav-btn.active  { background: rgba(218,165,32,0.12); color: #daa520; }
+
+    /* ── Toast ── */
+    #toast {
+        position: fixed;
+        bottom: 28px; right: 28px;
+        z-index: 999;
+        padding: 12px 20px;
+        border-radius: 14px;
+        font-size: 13px;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        pointer-events: none;
+        max-width: 320px;
+    }
+    #toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    #toast.success { background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); color: #4ade80; }
+    #toast.error   { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4);  color: #f87171; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.75);
+        backdrop-filter: blur(6px);
+        z-index: 100;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none;
+        transition: all 0.3s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+        background: #0f172a;
+        border: 1px solid rgba(218,165,32,0.3);
+        border-radius: 20px;
+        padding: 28px;
+        width: 90%;
+        max-width: 560px;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    /* ── Confirm dialog ── */
+    .confirm-overlay {
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(4px);
+        z-index: 200;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none;
+        transition: all 0.25s;
+    }
+    .confirm-overlay.open { opacity: 1; pointer-events: all; }
+    .confirm-box {
+        background: #0f172a;
+        border: 1px solid rgba(218,165,32,0.3);
+        border-radius: 18px;
+        padding: 28px;
+        width: 90%;
+        max-width: 380px;
+        text-align: center;
+    }
+
+    /* ── Loading / Empty ── */
+    .loading { text-align: center; padding: 48px; color: #5a4f44; font-size: 13px; }
+    .empty   { text-align: center; padding: 48px; color: #5a4f44; font-size: 13px; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(218,165,32,0.2); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="sidebar">
+    <div class="p-6 border-b border-yellow-500/10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style="background: linear-gradient(135deg,#c45a00,#daa520);">
+                <i class="fa-solid fa-sun text-white text-sm"></i>
+            </div>
+            <div>
+                <div class="font-bold text-sm" style="color:#daa520;">Godhuli Bangla</div>
+                <div class="text-[10px] opacity-50">Admin Panel</div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="p-4 flex flex-col gap-1 flex-1">
+        <button id="nav-dashboard" onclick="showSection('dashboard', this)"
+            class="nav-btn active w-full text-left px-4 py-3 flex items-center gap-3">
+            <i class="fa-solid fa-chart-pie w-4" style="color:#daa520;"></i> Dashboard
+        </button>
+        <button id="nav-partners" onclick="showSection('partners', this)"
+            class="nav-btn w-full text-left px-4 py-3 flex items-center gap-3">
+            <i class="fa-solid fa-handshake w-4" style="color:#daa520;"></i> Partners
+        </button>
+        <button id="nav-users" onclick="showSection('users', this)"
+            class="nav-btn w-full text-left px-4 py-3 flex items-center gap-3">
+            <i class="fa-solid fa-users w-4" style="color:#daa520;"></i> Users
+        </button>
+    </nav>
+
+    <div class="p-4 border-t border-yellow-500/10">
+        <a href="index.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm opacity-60 hover:opacity-100 transition-all">
+            <i class="fa-solid fa-arrow-left w-4"></i> Back to Site
+        </a>
+    </div>
+</aside>
+
+<!-- ══════════ MAIN CONTENT ══════════ -->
+<main class="main-content">
+
+    <!-- ── DASHBOARD ── -->
+    <div id="section-dashboard" class="section active">
+        <div class="mb-7">
+            <h1 class="text-2xl font-bold" style="color:#f5d98b;">Dashboard</h1>
+            <p class="text-sm opacity-50 mt-1">Platform overview</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <div class="stat-card col-span-2 md:col-span-1">
+                <div class="text-xs opacity-50 mb-2">Total Users</div>
+                <div class="text-3xl font-bold" style="color:#a5b4fc;" id="stat-users">
+                    <i class="fa-solid fa-spinner fa-spin text-xl"></i>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="text-xs opacity-50 mb-2">Partners</div>
+                <div class="text-3xl font-bold" style="color:#daa520;" id="stat-partners">
+                    <i class="fa-solid fa-spinner fa-spin text-xl"></i>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="text-xs opacity-50 mb-2">Pending</div>
+                <div class="text-3xl font-bold" style="color:#fbbf24;" id="stat-pending">
+                    <i class="fa-solid fa-spinner fa-spin text-xl"></i>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="text-xs opacity-50 mb-2">Approved</div>
+                <div class="text-3xl font-bold" style="color:#4ade80;" id="stat-approved">
+                    <i class="fa-solid fa-spinner fa-spin text-xl"></i>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="text-xs opacity-50 mb-2">Rejected</div>
+                <div class="text-3xl font-bold" style="color:#f87171;" id="stat-rejected">
+                    <i class="fa-solid fa-spinner fa-spin text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="shimmer-line"></div>
+
+        <!-- Pending quick view -->
+        <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-base font-semibold" style="color:#f5d98b;">
+                <i class="fa-solid fa-clock mr-2 text-yellow-500"></i>Pending Approvals
+            </h2>
+            <button onclick="showSection('partners', document.getElementById('nav-partners'))"
+                class="text-xs text-yellow-500 hover:underline">View all →</button>
+        </div>
+        <div class="table-wrap" id="dashboard-pending">
+            <div class="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</div>
+        </div>
+    </div>
+
+    <!-- ── PARTNERS ── -->
+    <div id="section-partners" class="section">
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold" style="color:#f5d98b;">Partners</h1>
+                <p class="text-sm opacity-50 mt-1">Manage partner registrations</p>
+            </div>
+            <button onclick="loadPartners()"
+                class="text-xs px-4 py-2 rounded-xl border border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/10 transition-all">
+                <i class="fa-solid fa-rotate-right mr-2"></i>Refresh
+            </button>
+        </div>
+
+        <div class="flex gap-2 mb-5">
+            <button class="tab-btn active" onclick="filterPartners('all', this)">
+                All <span id="count-all" class="ml-1 text-xs opacity-60"></span>
+            </button>
+            <button class="tab-btn" onclick="filterPartners('pending', this)">
+                Pending <span id="count-pending" class="ml-1 text-xs opacity-60"></span>
+            </button>
+            <button class="tab-btn" onclick="filterPartners('approved', this)">
+                Approved <span id="count-approved" class="ml-1 text-xs opacity-60"></span>
+            </button>
+            <button class="tab-btn" onclick="filterPartners('rejected', this)">
+                Rejected <span id="count-rejected" class="ml-1 text-xs opacity-60"></span>
+            </button>
+        </div>
+
+        <div class="table-wrap" id="partners-table">
+            <div class="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</div>
+        </div>
+    </div>
+
+    <!-- ── USERS ── -->
+    <div id="section-users" class="section">
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold" style="color:#f5d98b;">Users</h1>
+                <p class="text-sm opacity-50 mt-1">All registered personal users</p>
+            </div>
+            <button onclick="loadUsers()"
+                class="text-xs px-4 py-2 rounded-xl border border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/10 transition-all">
+                <i class="fa-solid fa-rotate-right mr-2"></i>Refresh
+            </button>
+        </div>
+
+        <div class="table-wrap" id="users-table">
+            <div class="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</div>
+        </div>
+    </div>
+
+</main>
+
+<!-- ══════════ DETAIL MODAL ══════════ -->
+<div class="modal-overlay" id="partner-modal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="flex items-center justify-between mb-5">
+            <h3 class="font-bold text-lg" style="color:#daa520;">Partner Details</h3>
+            <button onclick="closeModal()" class="opacity-50 hover:opacity-100 transition-all text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div id="modal-content"></div>
+    </div>
+</div>
+
+<!-- ══════════ CONFIRM DIALOG ══════════ -->
+<div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box">
+        <div id="confirm-icon" class="text-4xl mb-3"></div>
+        <p id="confirm-msg" class="text-sm mb-6 opacity-80"></p>
+        <div class="flex gap-3 justify-center">
+            <button id="confirm-cancel"
+                onclick="closeConfirm()"
+                class="px-5 py-2 rounded-xl border border-white/10 text-sm opacity-60 hover:opacity-100 transition-all">
+                Cancel
+            </button>
+            <button id="confirm-ok"
+                class="px-6 py-2 rounded-xl text-sm font-semibold transition-all">
+                Confirm
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════ TOAST ══════════ -->
+<div id="toast"></div>
+
+<!-- ══════════ SCRIPT ══════════ -->
+<script>
+const API        = 'http://127.0.0.1:5000';
+let allPartners  = [];
+let allUsers     = [];
+let confirmCb    = null;
+
+// ──────────────────────────────────────
+// TOAST
+// ──────────────────────────────────────
+function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className   = `show ${type}`;
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => { t.className = ''; }, 3200);
+}
+
+// ──────────────────────────────────────
+// CONFIRM DIALOG
+// ──────────────────────────────────────
+function showConfirm(msg, icon, okLabel, okClass, cb) {
+    document.getElementById('confirm-msg').textContent  = msg;
+    document.getElementById('confirm-icon').textContent = icon;
+    const okBtn = document.getElementById('confirm-ok');
+    okBtn.textContent = okLabel;
+    okBtn.className   = `px-6 py-2 rounded-xl text-sm font-semibold transition-all ${okClass}`;
+    confirmCb = cb;
+    document.getElementById('confirm-overlay').classList.add('open');
+    okBtn.onclick = () => { closeConfirm(); cb(); };
+}
+function closeConfirm() {
+    document.getElementById('confirm-overlay').classList.remove('open');
+    confirmCb = null;
+}
+
+// ──────────────────────────────────────
+// NAVIGATION
+// ──────────────────────────────────────
+function showSection(name, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(`section-${name}`).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    if (name === 'partners') loadPartners();
+    if (name === 'users')    loadUsers();
+}
+
+// ──────────────────────────────────────
+// STATS
+// ──────────────────────────────────────
+async function loadStats() {
+    try {
+        const res  = await fetch(`${API}/admin/stats`);
+        const data = await res.json();
+        document.getElementById('stat-users').textContent    = data.total_users    ?? '0';
+        document.getElementById('stat-partners').textContent = data.total_partners ?? '0';
+        document.getElementById('stat-pending').textContent  = data.pending        ?? '0';
+        document.getElementById('stat-approved').textContent = data.approved       ?? '0';
+        document.getElementById('stat-rejected').textContent = data.rejected       ?? '0';
+    } catch {
+        ['stat-users','stat-partners','stat-pending','stat-approved','stat-rejected'].forEach(id => {
+            document.getElementById(id).textContent = '—';
+        });
+    }
+}
+
+// ──────────────────────────────────────
+// PARTNERS
+// ──────────────────────────────────────
+async function loadPartners() {
+    document.getElementById('partners-table').innerHTML    = '<div class="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</div>';
+    document.getElementById('dashboard-pending').innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</div>';
+
+    try {
+        const res   = await fetch(`${API}/admin/partners`);
+        allPartners = await res.json();
+
+        // Tab counts
+        document.getElementById('count-all').textContent     = allPartners.length;
+        document.getElementById('count-pending').textContent  = allPartners.filter(p => p.status === 'pending').length;
+        document.getElementById('count-approved').textContent = allPartners.filter(p => p.status === 'approved').length;
+        document.getElementById('count-rejected').textContent = allPartners.filter(p => p.status === 'rejected').length;
+
+        renderPartners(allPartners);
+        renderDashboardPending(allPartners.filter(p => p.status === 'pending'));
+    } catch {
+        document.getElementById('partners-table').innerHTML    = '<div class="empty"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Cannot connect. Is Flask running on port 5000?</div>';
+        document.getElementById('dashboard-pending').innerHTML = '<div class="empty">Failed to load.</div>';
+    }
+}
+
+function renderPartners(list) {
+    const el = document.getElementById('partners-table');
+    if (!list.length) {
+        el.innerHTML = '<div class="empty"><i class="fa-solid fa-inbox mr-2"></i>No partners found.</div>';
+        return;
+    }
+
+    el.innerHTML = `
+    <div style="overflow-x:auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>Name / Hotel</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>NID</th>
+                <th>Documents</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${list.map(p => `
+            <tr>
+                <td>
+                    <div class="font-semibold text-sm" style="color:#f5d98b;">${esc(p.owner_name)}</div>
+                    <div class="text-xs opacity-60">${esc(p.hotel_name)}</div>
+                </td>
+                <td class="text-xs">${esc(p.email)}</td>
+                <td class="text-xs">
+                    <div>${esc(p.district)}</div>
+                    <div class="opacity-60">${esc(p.division)}</div>
+                </td>
+                <td class="text-xs font-mono">${esc(p.nid_number)}</td>
+                <td>
+                    <div class="flex gap-3 flex-wrap">
+                        ${p.nid_url
+                            ? `<a href="${p.nid_url}" target="_blank" class="text-xs text-yellow-500 hover:underline"><i class="fa-solid fa-id-card mr-1"></i>NID</a>`
+                            : '<span class="text-xs opacity-30">—</span>'}
+                        ${p.trade_license_url
+                            ? `<a href="${p.trade_license_url}" target="_blank" class="text-xs text-yellow-500 hover:underline"><i class="fa-solid fa-file-alt mr-1"></i>License</a>`
+                            : ''}
+                    </div>
+                </td>
+                <td><span class="badge badge-${p.status}">${p.status}</span></td>
+                <td>
+                    <div class="flex gap-2">
+                        ${p.status !== 'approved'
+                            ? `<button class="btn-approve" onclick="updateStatus('${p.id}', 'approved', '${esc(p.owner_name)}')">
+                                    <i class="fa-solid fa-check mr-1"></i>Approve
+                               </button>`
+                            : ''}
+                        ${p.status !== 'rejected'
+                            ? `<button class="btn-reject" onclick="updateStatus('${p.id}', 'rejected', '${esc(p.owner_name)}')">
+                                    <i class="fa-solid fa-xmark mr-1"></i>Reject
+                               </button>`
+                            : ''}
+                    </div>
+                </td>
+            </tr>`).join('')}
+        </tbody>
+    </table>
+    </div>`;
+}
+
+function renderDashboardPending(list) {
+    const el = document.getElementById('dashboard-pending');
+    if (!list.length) {
+        el.innerHTML = '<div class="empty"><i class="fa-solid fa-circle-check mr-2" style="color:#4ade80;"></i>No pending approvals — all clear!</div>';
+        return;
+    }
+
+    el.innerHTML = `
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hotel</th>
+                <th>Location</th>
+                <th>Registered</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${list.map(p => `
+            <tr>
+                <td style="color:#f5d98b;">${esc(p.owner_name)}</td>
+                <td class="text-xs">${esc(p.hotel_name)}</td>
+                <td class="text-xs">${esc(p.district)}, ${esc(p.division)}</td>
+                <td class="text-xs opacity-60">${p.created_at ? new Date(p.created_at).toLocaleDateString('en-BD') : '—'}</td>
+                <td>
+                    <div class="flex gap-2">
+                        <button class="btn-approve" onclick="updateStatus('${p.id}', 'approved', '${esc(p.owner_name)}')">
+                            <i class="fa-solid fa-check mr-1"></i>Approve
+                        </button>
+                        <button class="btn-reject" onclick="updateStatus('${p.id}', 'rejected', '${esc(p.owner_name)}')">
+                            <i class="fa-solid fa-xmark mr-1"></i>Reject
+                        </button>
+                    </div>
+                </td>
+            </tr>`).join('')}
+        </tbody>
+    </table>`;
+}
+
+function filterPartners(status, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filtered = status === 'all' ? allPartners : allPartners.filter(p => p.status === status);
+    renderPartners(filtered);
+}
+
+// ──────────────────────────────────────
+// UPDATE STATUS
+// ──────────────────────────────────────
+function updateStatus(id, status, name) {
+    const isApprove = status === 'approved';
+    showConfirm(
+        `${isApprove ? 'Approve' : 'Reject'} "${name}"?`,
+        isApprove ? '✅' : '❌',
+        isApprove ? 'Yes, Approve' : 'Yes, Reject',
+        isApprove
+            ? 'bg-green-500/20 border border-green-500/40 text-green-400 hover:bg-green-500/30'
+            : 'bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30',
+        async () => {
+            try {
+                const res    = await fetch(`${API}/admin/partner/${id}/status`, {
+                    method:  'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({ status })
+                });
+                const result = await res.json();
+
+                if (res.ok) {
+                    showToast(result.message || `Status updated!`, 'success');
+                    await loadPartners();
+                    await loadStats();
+                } else {
+                    showToast('Error: ' + (result.error || 'Update failed'), 'error');
+                }
+            } catch {
+                showToast('Cannot connect to server.', 'error');
+            }
+        }
+    );
+}
+
+// ──────────────────────────────────────
+// USERS
+// ──────────────────────────────────────
+async function loadUsers() {
+    document.getElementById('users-table').innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</div>';
+    try {
+        const res = await fetch(`${API}/admin/users`);
+        allUsers  = await res.json();
+        renderUsers(allUsers);
+    } catch {
+        document.getElementById('users-table').innerHTML = '<div class="empty"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Failed to load. Is Flask running?</div>';
+    }
+}
+
+function renderUsers(list) {
+    const el = document.getElementById('users-table');
+    if (!list.length) {
+        el.innerHTML = '<div class="empty"><i class="fa-solid fa-inbox mr-2"></i>No users found.</div>';
+        return;
+    }
+
+    el.innerHTML = `
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Age</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Joined</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${list.map(u => `
+            <tr>
+                <td style="color:#f5d98b;">${esc(u.full_name)}</td>
+                <td class="text-xs">${esc(u.email)}</td>
+                <td class="text-xs font-mono">${esc(u.mobile_number)}</td>
+                <td class="text-xs">${u.age || '—'}</td>
+                <td><span class="badge badge-personal">${u.role || 'personal'}</span></td>
+                <td><span class="badge badge-${u.status || 'approved'}">${u.status || 'approved'}</span></td>
+                <td class="text-xs opacity-60">${u.created_at ? new Date(u.created_at).toLocaleDateString('en-BD') : '—'}</td>
+            </tr>`).join('')}
+        </tbody>
+    </table>`;
+}
+
+// ──────────────────────────────────────
+// MODAL
+// ──────────────────────────────────────
+function closeModal(e) {
+    if (!e || e.target === document.getElementById('partner-modal')) {
+        document.getElementById('partner-modal').classList.remove('open');
+    }
+}
+
+// ──────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────
+function esc(str) {
+    if (!str) return '—';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// ──────────────────────────────────────
+// INIT
+// ──────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+    loadStats();
+    loadPartners();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Godhuli Bangla — Where Twilight Meets Luxury</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<!-- Custom CSS -->
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body id="body">
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="navbar-glass fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-5 py-4 flex items-center">
+
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #c45a00, #daa520);">
+        <i class="fa-solid fa-sun text-white text-sm"></i>
+      </div>
+      <div>
+        <div class="font-display font-bold text-lg leading-none" style="color:#f5d98b;">Godhuli Bangla</div>
+        <div class="text-xs tracking-widest uppercase" style="color:#c4a45a; letter-spacing:0.18em;">Boutique Resort</div>
+      </div>
+    </a>
+
+    <!-- Desktop Nav Links (Home, Rooms, etc.) -->
+    <div class="hidden md:flex items-center gap-8 ml-10">
+      <a href="#" class="text-sm font-semibold hover:text-yellow-300 transition-all duration-300" style="color:#d4c9b8;">Home</a>
+      <a href="#rooms" class="text-sm font-semibold hover:text-yellow-300 transition-all duration-300" style="color:#d4c9b8;">Rooms</a>
+      <a href="#about" class="text-sm font-semibold hover:text-yellow-300 transition-all duration-300" style="color:#d4c9b8;">About</a>
+    </div>
+
+<!-- Right Aligned Section -->
+<div class="ml-auto flex items-center gap-4">
+    
+    <!-- ১. থিম টগল (Theme Toggle) -->
+    <div class="flex flex-col items-center gap-1 cursor-pointer group" onclick="toggleTheme()">
+        <button class="w-8 h-8 rounded-full flex items-center justify-center border border-white/20">
+            <i class="fa-solid fa-moon text-xs" id="theme-icon"></i>
+        </button>
+        <span class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-60 group-hover:opacity-100 transition-opacity" style="color:#f5d98b;">
+            Theme
+        </span>
+    </div>
+
+    <!-- ২. বাটন সেকশন (Desktop) -->
+    <div class="hidden md:flex items-center gap-3">
+        <!-- Join Now বাটন -->
+        <a href="register.html" class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all flex items-center gap-2 hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+           style="background: linear-gradient(135deg, #c45a00, #daa520); color:#fff; box-shadow: 0 4px 15px rgba(196,90,0,0.3);">
+            <i class="fa-solid fa-user-plus"></i>
+            Join Now
+        </a>
+
+        <!-- Sign In বাটন -->
+        <a href="login.html" class="px-5 py-2.5 rounded-full text-sm font-semibold border transition-all hover:bg-white/10 hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+           style="border-color:rgba(218,165,32,0.45); color:#f5d98b;">
+            <i class="fa-solid fa-right-to-bracket mr-2"></i>
+            Sign In
+        </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button onclick="document.getElementById('mobile-menu').classList.toggle('open')"
+      class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg"
+      style="border: 1px solid rgba(218,165,32,0.25);">
+      <span class="block w-5 h-px bg-yellow-300/80"></span>
+      <span class="block w-5 h-px bg-yellow-300/80"></span>
+      <span class="block w-4 h-px bg-yellow-300/80"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden flex-col gap-4 px-5 pb-5 md:hidden border-t border-white/10 mt-4 bg-[#080f1f]">
+    <a href="index.html" class="pt-4 text-sm font-medium text-[#d4c9b8]">Home</a>
+    <a href="#rooms" class="text-sm font-medium text-[#d4c9b8]">Rooms</a>
+    <a href="#about" class="text-sm font-medium text-[#d4c9b8]">About</a>
+    <div class="flex gap-3 pt-2">
+        <a href="login.html" class="flex-1 text-center px-4 py-2 rounded-full text-sm font-medium border border-gold-400/40 text-[#f5d98b]">Sign In</a>
+        <a href="register.html" class="flex-1 text-center px-4 py-2 rounded-full text-sm font-semibold text-white" style="background: linear-gradient(135deg, #c45a00, #daa520);">Register</a>
+    </div>
+</div>
+</nav>
+
+<!-- ═══════════════ HERO SECTION ═══════════════ -->
+<section class="hero-bg min-h-screen flex flex-col justify-center relative overflow-hidden">
+  <div class="hero-img-placeholder"></div>
+
+  <!-- Decorative sun orb -->
+  <div class="absolute top-24 right-10 md:right-24 w-48 h-48 md:w-72 md:h-72 rounded-full opacity-20 pointer-events-none"
+    style="background: radial-gradient(circle, #f5a020 0%, #daa520 40%, transparent 70%); filter: blur(30px);"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-5 pt-28 pb-24 text-center">
+
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 glow-badge px-5 py-2 rounded-full mb-8">
+      <span class="stars text-xs">★★★★★</span>
+      <span class="text-xs font-medium tracking-wider uppercase" style="color:#daa520;">Premium Boutique Experience</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="font-display font-bold leading-tight mb-6"
+      style="font-size: clamp(2.4rem, 6vw, 5rem); color: #fef3c7; text-shadow: 0 4px 40px rgba(218,165,32,0.3);">
+      Where Every Twilight<br />
+      <span style="color: #f5901e; font-style: italic;">Tells a Story</span>
+    </h1>
+
+    <!-- Sub-headline -->
+    <p class="max-w-2xl mx-auto mb-10 text-lg leading-relaxed" style="color: #c9b99a; font-weight: 300;">
+      Nestled at the golden hour's edge — Godhuli Bangla offers handcrafted rooms, riverside serenity,
+      and a hospitality rooted in the warmth of Bengal.
+    </p>
+<!-- Fixed Search Bar -->
+<div class="max-w-5xl mx-auto px-4">
+  <div class="search-bar rounded-2xl p-2 md:p-3 flex flex-col lg:flex-row items-stretch gap-2 shadow-2xl">
+
+    <!-- 1. Smart Location -->
+    <div class="flex-[1.5] flex items-center gap-3 px-4 py-3 rounded-xl relative group" style="background: rgba(255,255,255,0.05);">
+      <i class="fa-solid fa-location-crosshairs text-yellow-400/70 text-sm cursor-pointer hover:text-yellow-400" onclick="getLocation()"></i>
+      <div class="text-left flex-1 min-w-0">
+        <div class="text-[10px] uppercase tracking-wider mb-0.5 font-bold" style="color:#9a8c7c;">Location</div>
+        <input type="text" id="location-input" placeholder="Where to?" class="bg-transparent text-sm w-full outline-none truncate" style="color:#f1ece4;" />
+      </div>
+    </div>
+
+    <!-- 2. Check-in -->
+    <div class="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl" style="background: rgba(255,255,255,0.05);">
+      <i class="fa-regular fa-calendar text-yellow-400/70 text-sm"></i>
+      <div class="text-left flex-1">
+        <div class="text-[10px] uppercase tracking-wider mb-0.5 font-bold" style="color:#9a8c7c;">Check-in</div>
+        <input type="date" class="bg-transparent text-xs w-full outline-none" style="color:#f1ece4;" />
+      </div>
+    </div>
+
+    <!-- 3. Check-out -->
+    <div class="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl" style="background: rgba(255,255,255,0.05);">
+      <i class="fa-regular fa-calendar-check text-yellow-400/70 text-sm"></i>
+      <div class="text-left flex-1">
+        <div class="text-[10px] uppercase tracking-wider mb-0.5 font-bold" style="color:#9a8c7c;">Check-out</div>
+        <input type="date" class="bg-transparent text-xs w-full outline-none" style="color:#f1ece4;" />
+      </div>
+    </div>
+
+    <!-- 4. Guests -->
+    <div class="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl" style="background: rgba(255,255,255,0.05);">
+      <i class="fa-solid fa-user-group text-yellow-400/70 text-sm"></i>
+      <div class="text-left flex-1">
+        <div class="text-[10px] uppercase tracking-wider mb-0.5 font-bold" style="color:#9a8c7c;">Guests</div>
+        <select class="bg-transparent text-xs w-full outline-none cursor-pointer" style="color:#f1ece4;">
+          <option class="bg-navy-900">1 Guest</option>
+          <option class="bg-navy-900">2 Guests</option>
+          <option class="bg-navy-900">3+ Guests</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Search Button -->
+    <button class="lg:px-8 py-4 rounded-xl text-sm font-bold transition-all hover:brightness-110 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+      style="background: linear-gradient(135deg, #c45a00, #e8a020); color: #fff; box-shadow: 0 8px 20px rgba(196,90,0,0.3);">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Search Rooms</span>
+    </button>
+  </div>
+</div>
+
+    <!-- Quick Stats -->
+    <div class="flex flex-wrap justify-center gap-8 mt-12">
+      <div class="text-center">
+        <div class="font-display font-bold text-2xl" style="color:#f5d98b;">24+</div>
+        <div class="text-xs" style="color:#9a8c7c;">Curated Rooms</div>
+      </div>
+      <div class="w-px hidden md:block self-stretch" style="background:rgba(218,165,32,0.2);"></div>
+      <div class="text-center">
+        <div class="font-display font-bold text-2xl" style="color:#f5d98b;">4.9★</div>
+        <div class="text-xs" style="color:#9a8c7c;">Guest Rating</div>
+      </div>
+      <div class="w-px hidden md:block self-stretch" style="background:rgba(218,165,32,0.2);"></div>
+      <div class="text-center">
+        <div class="font-display font-bold text-2xl" style="color:#f5d98b;">3,200+</div>
+        <div class="text-xs" style="color:#9a8c7c;">Happy Stays</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom shimmer divider -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <div class="shimmer-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ ROOMS SHOWCASE ═══════════════ -->
+<section id="rooms" class="py-24 px-5 max-w-7xl mx-auto">
+  <div class="text-center mb-14 fade-up">
+    <p class="text-xs tracking-widest uppercase mb-3 font-medium" style="color:#daa520;">Our Accommodations</p>
+    <h2 class="font-display font-bold text-3xl md:text-4xl gold-underline" style="color:#fef3c7;">Rooms & Suites</h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Room Card 1 -->
+    <div class="card-lift rounded-2xl overflow-hidden fade-up" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(218,165,32,0.15);">
+      <div class="h-48 relative" style="background: linear-gradient(135deg, #3a1a00, #6b2d00);">
+        <div class="absolute inset-0 flex items-center justify-center opacity-20">
+          <i class="fa-solid fa-bed text-7xl text-yellow-300"></i>
+        </div>
+        <div class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold" style="background: rgba(218,165,32,0.85); color:#1a0800;">Deluxe</div>
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-semibold text-lg mb-1" style="color:#f5d98b;">Twilight Deluxe Room</h3>
+        <p class="text-sm mb-4" style="color:#9a8c7c;">Riverfront view with king bed, handloom linens & artisan bath amenities.</p>
+        <div class="flex items-center justify-between">
+          <div><span class="font-bold text-xl" style="color:#f5901e;">৳ 6,500</span><span class="text-xs ml-1" style="color:#9a8c7c;">/ night</span></div>
+          <button class="px-4 py-1.5 rounded-full text-xs font-medium" style="border: 1px solid rgba(218,165,32,0.4); color:#daa520;">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room Card 2 (Featured) -->
+    <div class="card-lift rounded-2xl overflow-hidden fade-up" style="background: rgba(218,165,32,0.08); border: 2px solid rgba(218,165,32,0.45); box-shadow: 0 0 40px rgba(218,165,32,0.08);">
+      <div class="h-48 relative" style="background: linear-gradient(135deg, #5a2800, #9a5000);">
+        <div class="absolute inset-0 flex items-center justify-center opacity-20">
+          <i class="fa-solid fa-spa text-7xl text-yellow-200"></i>
+        </div>
+        <div class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold" style="background:  rgba(218,165,32,0.85); color:#1a0800;">Most Popular</div>
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-semibold text-lg mb-1" style="color:#f5d98b;">Sunset Heritage Suite</h3>
+        <p class="text-sm mb-4" style="color:#9a8c7c;">Private balcony, antique décor, copper-tub bath & butler service at dusk.</p>
+        <div class="flex items-center justify-between">
+          <div><span class="font-bold text-xl" style="color:#f5901e;">৳ 12,000</span><span class="text-xs ml-1" style="color:#9a8c7c;">/ night</span></div>
+          <button class="px-4 py-1.5 rounded-full text-xs font-semibold" style="background: linear-gradient(135deg,#c45a00,#daa520); color:#fff;">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room Card 3 -->
+    <div class="card-lift rounded-2xl overflow-hidden fade-up" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(218,165,32,0.15);">
+      <div class="h-48 relative" style="background: linear-gradient(135deg, #0d1a2b, #1a2f4a);">
+        <div class="absolute inset-0 flex items-center justify-center opacity-20">
+          <i class="fa-solid fa-star text-7xl text-yellow-300"></i>
+        </div>
+        <div class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold" style="background:  rgba(218,165,32,0.85); color:#1a0800;">Presidential</div>
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-semibold text-lg mb-1" style="color:#f5d98b;">Godhuli Grand Villa</h3>
+        <p class="text-sm mb-4" style="color:#9a8c7c;">Full-floor private villa, plunge pool, personal chef & panoramic skyline.</p>
+        <div class="flex items-center justify-between">
+          <div><span class="font-bold text-xl" style="color:#f5901e;">৳ 28,000</span><span class="text-xs ml-1" style="color:#9a8c7c;">/ night</span></div>
+          <button class="px-4 py-1.5 rounded-full text-xs font-medium" style="border: 1px solid rgba(218,165,32,0.4); color:#daa520;">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ USER / PARTNER SECTION ═══════════════ -->
+<section id="about" class="py-24 px-5" style="background: rgba(0,0,0,0.3);">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <p class="text-xs tracking-widest uppercase mb-3 font-medium" style="color:#daa520;">Who We Welcome</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl gold-underline" style="color:#fef3c7;">Choose Your Path</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Guest Card -->
+      <div class="guest-card card-lift rounded-2xl p-8 fade-up">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
+          style="background: linear-gradient(135deg, rgba(245,144,30,0.2), rgba(218,165,32,0.1)); border: 1px solid rgba(245,144,30,0.3);">
+          <i class="fa-solid fa-user-tie text-2xl" style="color:#f5901e;"></i>
+        </div>
+        <h3 class="font-display font-semibold text-xl mb-3" style="color:#f5d98b;">Valued Guests</h3>
+        <p class="text-sm leading-relaxed mb-6" style="color:#9a8c7c;">
+          Create your personal account to browse curated rooms, manage reservations, earn loyalty points, and receive tailored offers for every sunset you spend with us.
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-3 text-sm" style="color:#c9b99a;">
+            <i class="fa-solid fa-check-circle text-sm" style="color:#daa520;"></i>
+            Instant room booking & confirmation
+          </li>
+          <li class="flex items-center gap-3 text-sm" style="color:#c9b99a;">
+            <i class="fa-solid fa-check-circle text-sm" style="color:#daa520;"></i>
+            Loyalty rewards & exclusive member rates
+          </li>
+          <li class="flex items-center gap-3 text-sm" style="color:#c9b99a;">
+            <i class="fa-solid fa-check-circle text-sm" style="color:#daa520;"></i>
+            24/7 concierge via AI + human support
+          </li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all hover:scale-105"
+          style="background: linear-gradient(135deg, rgba(245,144,30,0.15), rgba(218,165,32,0.1)); border: 1px solid rgba(218,165,32,0.35); color:#f5d98b;">
+          <i class="fa-regular fa-user"></i> Create Guest Account
+        </a>
+      </div>
+
+      <!-- Partner Card -->
+      <div class="partner-card card-lift rounded-2xl p-8 fade-up">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
+          style="background: linear-gradient(135deg, rgba(218,165,32,0.25), rgba(196,90,0,0.15)); border: 1px solid rgba(218,165,32,0.4);">
+          <i class="fa-solid fa-handshake text-2xl" style="color:#daa520;"></i>
+        </div>
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="font-display font-semibold text-xl" style="color:#f5d98b;">Business Partners</h3>
+          <span class="px-3 py-1 rounded-full text-xs font-medium ml-3 flex-shrink-0"
+            style="background: rgba(218,165,32,0.15); border: 1px solid rgba(218,165,32,0.35); color:#daa520;">
+            <i class="fa-solid fa-shield-halved mr-1"></i> Admin Approved
+          </span>
+        </div>
+        <p class="text-sm leading-relaxed mb-6" style="color:#9a8c7c;">
+          Travel agencies, event planners, and corporate clients can register for a dedicated partner dashboard. All accounts undergo a <strong style="color:#c9b99a;">secure admin approval process</strong> to maintain our exclusive network.
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-3 text-sm" style="color:#c9b99a;">
+            <i class="fa-solid fa-check-circle text-sm" style="color:#daa520;"></i>
+            Bulk booking with negotiated rates
+          </li>
+          <li class="flex items-center gap-3 text-sm" style="color:#c9b99a;">
+            <i class="fa-solid fa-check-circle text-sm" style="color:#daa520;"></i>
+            Dedicated partner dashboard & reports
+          </li>
+          <li class="flex items-center gap-3 text-sm" style="color:#c9b99a;">
+            <i class="fa-solid fa-check-circle text-sm" style="color:#daa520;"></i>
+            Priority support & commission tracking
+          </li>
+        </ul>
+        <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all hover:brightness-110 hover:scale-105"
+          style="background: linear-gradient(135deg, #c45a00, #daa520); color:#fff; box-shadow: 0 6px 24px rgba(196,90,0,0.35);">
+          <i class="fa-solid fa-paper-plane"></i> Apply for Partnership
+        </a>
+        <p class="text-xs mt-3" style="color:#6b5d4a;">
+          <i class="fa-solid fa-clock mr-1"></i>Approvals typically within 24–48 hours
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ EXPERIENCE STRIP ═══════════════ -->
+<div class="shimmer-line"></div>
+<section class="py-16 px-5">
+  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center fade-up">
+    <div class="py-6">
+      <i class="fa-solid fa-utensils text-2xl mb-4" style="color:#daa520;"></i>
+      <div class="text-sm font-medium mb-1" style="color:#f5d98b;">Bengali Cuisine</div>
+      <div class="text-xs" style="color:#7a6c5c;">Farm-to-table flavours</div>
+    </div>
+    <div class="py-6">
+      <i class="fa-solid fa-water text-2xl mb-4" style="color:#daa520;"></i>
+      <div class="text-sm font-medium mb-1" style="color:#f5d98b;">Riverside Serenity</div>
+      <div class="text-xs" style="color:#7a6c5c;">Padma bank retreats</div>
+    </div>
+    <div class="py-6">
+      <i class="fa-solid fa-paintbrush text-2xl mb-4" style="color:#daa520;"></i>
+      <div class="text-sm font-medium mb-1" style="color:#f5d98b;">Heritage Décor</div>
+      <div class="text-xs" style="color:#7a6c5c;">Handcrafted artisan rooms</div>
+    </div>
+    <div class="py-6">
+      <i class="fa-solid fa-car text-2xl mb-4" style="color:#daa520;"></i>
+      <div class="text-sm font-medium mb-1" style="color:#f5d98b;">Private Transfers</div>
+      <div class="text-xs" style="color:#7a6c5c;">Airport & local pickup</div>
+    </div>
+  </div>
+</section>
+<div class="shimmer-line"></div>
+
+<!-- ═══════════════ TRUST / SECURITY SECTION ═══════════════ -->
+<section class="trust-section py-14 px-5">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-10 fade-up">
+      <p class="text-xs tracking-widest uppercase mb-2 font-medium" style="color:#daa520;">Built on Trust</p>
+      <h2 class="font-display font-semibold text-2xl" style="color:#fef3c7;">Your Security is Our Priority</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 fade-up">
+
+      <div class="flex flex-col items-center text-center p-5 rounded-xl" style="background: rgba(218,165,32,0.05); border: 1px solid rgba(218,165,32,0.14);">
+        <i class="fa-solid fa-lock text-xl mb-3" style="color:#daa520;"></i>
+        <div class="text-sm font-semibold mb-1" style="color:#f5d98b;">Secure Payments</div>
+        <div class="text-xs" style="color:#7a6c5c;">SSL-encrypted transactions via trusted gateways</div>
+      </div>
+
+      <div class="flex flex-col items-center text-center p-5 rounded-xl" style="background: rgba(218,165,32,0.05); border: 1px solid rgba(218,165,32,0.14);">
+        <i class="fa-solid fa-shield-halved text-xl mb-3" style="color:#daa520;"></i>
+        <div class="text-sm font-semibold mb-1" style="color:#f5d98b;">Data Privacy</div>
+        <div class="text-xs" style="color:#7a6c5c;">GDPR-aligned policy — your data stays yours</div>
+      </div>
+
+      <div class="flex flex-col items-center text-center p-5 rounded-xl" style="background: rgba(218,165,32,0.05); border: 1px solid rgba(218,165,32,0.14);">
+        <i class="fa-solid fa-rotate-left text-xl mb-3" style="color:#daa520;"></i>
+        <div class="text-sm font-semibold mb-1" style="color:#f5d98b;">Free Cancellation</div>
+        <div class="text-xs" style="color:#7a6c5c;">Up to 48hrs before check-in, no questions asked</div>
+      </div>
+
+      <div class="flex flex-col items-center text-center p-5 rounded-xl" style="background: rgba(218,165,32,0.05); border: 1px solid rgba(218,165,32,0.14);">
+        <i class="fa-solid fa-headset text-xl mb-3" style="color:#daa520;"></i>
+        <div class="text-sm font-semibold mb-1" style="color:#f5d98b;">24/7 Support</div>
+        <div class="text-xs" style="color:#7a6c5c;">Live agents and AI ready round the clock</div>
+      </div>
+    </div>
+
+    <!-- Payment icons -->
+    <div class="flex flex-wrap justify-center items-center gap-5 mt-10 opacity-50">
+      <i class="fa-brands fa-cc-visa text-3xl" style="color:#c9b99a;"></i>
+      <i class="fa-brands fa-cc-mastercard text-3xl" style="color:#c9b99a;"></i>
+      <i class="fa-brands fa-cc-paypal text-3xl" style="color:#c9b99a;"></i>
+      <i class="fa-brands fa-cc-stripe text-3xl" style="color:#c9b99a;"></i>
+      <span class="text-xs px-3 py-1 rounded-full" style="border: 1px solid rgba(218,165,32,0.2); color:#9a8c7c;">bKash</span>
+      <span class="text-xs px-3 py-1 rounded-full" style="border: 1px solid rgba(218,165,32,0.2); color:#9a8c7c;">Nagad</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="py-10 px-5" style="background: #030712; border-top: 1px solid rgba(218,165,32,0.1);">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #c45a00, #daa520);">
+        <i class="fa-solid fa-sun text-white text-xs"></i>
+      </div>
+      <span class="font-display font-semibold" style="color:#f5d98b;">Godhuli Bangla</span>
+    </div>
+    <p class="text-xs text-center" style="color:#5a4f44;">© 2025 Godhuli Bangla Resorts Ltd. All rights reserved. · <a href="#" style="color:#daa520;">Privacy Policy</a> · <a href="#" style="color:#daa520;">Terms</a></p>
+    <div class="flex gap-4">
+      <a href="#" class="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(218,165,32,0.1); border: 1px solid rgba(218,165,32,0.2); color:#daa520;">
+        <i class="fa-brands fa-facebook-f text-xs"></i>
+      </a>
+      <a href="#" class="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(218,165,32,0.1); border: 1px solid rgba(218,165,32,0.2); color:#daa520;">
+        <i class="fa-brands fa-instagram text-xs"></i>
+      </a>
+      <a href="#" class="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(218,165,32,0.1); border: 1px solid rgba(218,165,32,0.2); color:#daa520;">
+        <i class="fa-brands fa-x-twitter text-xs"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ AI CHATBOT WIDGET ═══════════════ -->
+<div id="chat-btn" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+
+  <!-- Chat button -->
+  <button onclick="toggleChat()" class="chat-btn w-16 h-16 rounded-full flex items-center justify-center relative">
+    <i class="fa-solid fa-comment-dots text-2xl text-white" id="chat-icon"></i>
+    <!-- Notification badge -->
+    <span class="badge-pulse absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background: #dc2626; font-size: 9px;">AI</span>
+  </button>
+</div>
+
+<!-- Chat Panel -->
+<div id="chat-panel" class="fixed bottom-28 right-6 z-50 w-80 rounded-2xl overflow-hidden transition-all duration-300 scale-95 opacity-0 pointer-events-none"
+  style="background: rgba(8,15,31,0.97); border: 1px solid rgba(218,165,32,0.25); box-shadow: 0 24px 60px rgba(0,0,0,0.6); backdrop-filter: blur(20px);">
+
+  <!-- Header -->
+  <div class="px-5 py-4 flex items-center justify-between" style="background: linear-gradient(135deg, rgba(196,90,0,0.3), rgba(218,165,32,0.15)); border-bottom: 1px solid rgba(218,165,32,0.15);">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg,#c45a00,#daa520);">
+        <i class="fa-solid fa-robot text-white text-xs"></i>
+      </div>
+      <div>
+        <div class="text-sm font-semibold" style="color:#f5d98b;">Godhuli AI</div>
+        <div class="flex items-center gap-1.5">
+          <div class="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+          <span class="text-xs" style="color:#7a8c7c;">Online now</span>
+        </div>
+      </div>
+    </div>
+    <button onclick="toggleChat()" class="text-xs px-2 py-1 rounded" style="color:#7a6c5c;">✕</button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-messages" class="px-4 py-4 space-y-3 h-56 overflow-y-auto">
+    <div class="flex gap-2.5">
+      <div class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg,#c45a00,#daa520);">
+        <i class="fa-solid fa-sun text-white text-xs" style="font-size: 9px;"></i>
+      </div>
+      <div class="px-3 py-2.5 rounded-2xl rounded-tl-none text-xs leading-relaxed max-w-xs" style="background: rgba(218,165,32,0.1); border: 1px solid rgba(218,165,32,0.15); color:#c9b99a;">
+        Shubho Sandhi! 🌅 I'm your Godhuli AI concierge. Tell me your ideal stay and I'll find the perfect room for you!
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="px-4 pb-4">
+    <div class="flex gap-2" style="border: 1px solid rgba(218,165,32,0.2); border-radius: 12px; background: rgba(255,255,255,0.04); overflow: hidden;">
+      <input id="chat-input" type="text" placeholder="e.g. 2 nights, riverside view…"
+        class="flex-1 bg-transparent px-3 py-3 text-xs outline-none placeholder-gray-600"
+        style="color:#c9b99a;"
+        onkeydown="if(event.key==='Enter') sendChat()" />
+      <button onclick="sendChat()" class="px-4 text-xs font-semibold flex items-center gap-1 transition-all hover:brightness-110"
+        style="background: linear-gradient(135deg,#c45a00,#daa520); color:#fff; border-radius: 0 10px 10px 0;">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+    <p class="text-center text-xs mt-2" style="color:#4a3f35;">Powered by Godhuli AI · Responses may vary</p>
+  </div>
+</div>
+<!-- Custom JS -->
+<script src="assets/js/script.js">
+</script>
+</body>
+</html>

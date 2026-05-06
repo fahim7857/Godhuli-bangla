@@ -1,0 +1,411 @@
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #080f1f;
+    color: #f1ece4;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* Hero Section Background */
+  .hero-bg {
+    position: relative;
+    min-height: 100vh;
+    z-index: 1;
+  }
+
+  /* ইমেজ এবং ওভারলে - এখানে মূল পরিবর্তন */
+  .hero-img-placeholder {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(to bottom, 
+        rgba(8, 15, 31, 0.6) 0%,   /* ডার্ক ওভারলে ১ */
+        rgba(8, 15, 31, 0.4) 40%,  /* ডার্ক ওভারলে ২ */
+        rgba(8, 15, 31, 0.9) 100%  /* নিচের দিকে একদম ডার্ক */
+      ),
+      url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1600&q=80&fit=crop') center/cover no-repeat;
+    z-index: -1;
+  }
+
+  /* হেডলাইন ও প্যারাগ্রাফ স্পষ্ট করার জন্য শ্যাডো */
+  h1, .font-display {
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    font-weight: 800;
+  }
+
+  p {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    line-height: 1.6;
+  }
+
+  /* প্রফেশনাল লাইট মোড ফিক্স */
+  body.light-mode .hero-img-placeholder {
+    background: 
+      linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        rgba(255, 255, 255, 0.1) 40%, 
+        #FFFFFF 100%
+      ),
+      url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1600&q=80&fit=crop') center/cover no-repeat;
+  }
+
+  body.light-mode h1, body.light-mode .font-display {
+    color: #2D1B0D !important; /* লাইট মোডে গাঢ় বাদামী */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  body.light-mode p {
+    color: #334155 !important; /* লাইট মোডে গাঢ় গ্রে */
+    text-shadow: none !important;
+    font-weight: 500;
+  }
+  /* --- Global Light Mode - সব সেকশন ঠিক করার জন্য --- */
+
+body.light-mode {
+    background: #FFFFFF !important;
+    color: #1a202c !important;
+}
+
+/* ১. সব সেকশনের ব্যাকগ্রাউন্ড (Trust Section, Partners, Rooms) */
+body.light-mode section, 
+body.light-mode .trust-section,
+body.light-mode div[class*="bg-"] {
+    background-color: #f8fafc !important; /* হালকা অফ-হোয়াইট */
+    color: #1a202c !important;
+}
+
+/* ২. কার্ডগুলো ঠিক করা (Room Cards & Partner Cards) */
+body.light-mode .card-lift,
+body.light-mode .partner-card,
+body.light-mode .guest-card,
+body.light-mode div[style*="background: rgba(255,255,255,0.05)"],
+body.light-mode div[style*="background: linear-gradient"] {
+    background: #ffffff !important;
+    border: 1px solid rgba(196, 90, 0, 0.15) !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+}
+
+/* ৩. সব টেক্সট এবং হেডলাইন */
+body.light-mode h1, 
+body.light-mode h2, 
+body.light-mode h3, 
+body.light-mode .text-white,
+body.light-mode .text-gray-300,
+body.light-mode .text-gray-400 {
+    color: #2d3748 !important; /* ডার্ক গ্রে/ব্ল্যাক */
+}
+
+/* ৪. প্যারাগ্রাফ ও ছোট লেখা */
+body.light-mode p, 
+body.light-mode span:not(.stars) {
+    color: #4a5568 !important;
+}
+
+/* ৫. ফুটার সেকশন */
+body.light-mode footer {
+    background: #f1f5f9 !important;
+    border-top: 1px solid rgba(196, 90, 0, 0.1);
+}
+
+/* ৬. আইকন কালার */
+body.light-mode i:not(.fa-star) {
+    color: #c45a00 !important;
+}
+
+/* ৭. ইনপুট ও ড্রপডাউন */
+body.light-mode select option {
+    background: #ffffff !important;
+    color: #1a202c !important;
+}
+/* ১. ন্যাভবার লিংক এবং বাটন হাইলাইট */
+nav a {
+  position: relative;
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #f5901e;
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: #f5901e !important;
+  transform: translateY(-1px);
+}
+
+/* ২. প্রিমিয়াম সার্চ বাটন এবং জেনারেল বাটন */
+button[style*="background: linear-gradient"] {
+  box-shadow: 0 10px 25px rgba(196, 90, 0, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+button[style*="background: linear-gradient"]:hover {
+  box-shadow: 0 15px 35px rgba(196, 90, 0, 0.6) !important;
+  filter: brightness(1.2);
+}
+
+/* ৩. আল্ট্রা প্রিমিয়াম চ্যাটবট ডিজাইন */
+.chat-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px; /* আধুনিক স্কুইয়ার-শেপ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: linear-gradient(135deg, #c45a00 0%, #daa520 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+/* চ্যাটবটের ওপর ছোট একটি নোটিফিকেশন ডট */
+.chat-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  background: #ff4d4d;
+  border: 2px solid #080f1f;
+  border-radius: 50%;
+  animation: badge-pulse 2s infinite;
+}
+
+/* ৪. ডার্ক/লাইট মোডে স্পেসিফিক হাইলাইট */
+body.light-mode nav a {
+  color: #1e293b !important;
+}
+
+body.light-mode .chat-btn {
+  border: 2px solid #ffffff;
+  box-shadow: 0 10px 30px rgba(196, 90, 0, 0.3) !important;
+}
+/* লাইট মোডে ড্রপডাউন মেনু ফিক্স */
+body.light-mode .group-hover\:opacity-100 {
+  background: #ffffff !important; /* মেনুর ব্যাকগ্রাউন্ড সাদা */
+  border: 1px solid rgba(196, 90, 0, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .group-hover\:opacity-100 .text-white {
+  color: #1e293b !important; /* "As a Guest" লেখাটি ডার্ক হবে */
+}
+
+body.light-mode .group-hover\:opacity-100 .text-gray-400 {
+  color: #64748b !important; /* নিচের ছোট লেখাটি গ্রে হবে */
+}
+
+body.light-mode .group-hover\:opacity-100 .hover\:bg-white\/5:hover {
+  background-color: rgba(196, 90, 0, 0.05) !important; /* হোভার করলে হালকা কমলা আভা */
+}
+
+/* ড্রপডাউন আইকন বক্সের ব্যাকগ্রাউন্ড অ্যাডজাস্ট */
+body.light-mode .bg-sunset-400\/10, 
+body.light-mode .bg-gold-400\/10 {
+  background-color: rgba(196, 90, 0, 0.1) !important;
+}
+/* লাইট মোডে হেডলাইন এবং পপুলার সেকশন টেক্সট ফিক্স */
+body.light-mode h2, 
+body.light-mode .text-2xl, 
+body.light-mode .text-3xl,
+body.light-mode .font-display {
+  color: #2D1B0D !important; /* ডার্ক চকলেট/বাদামী কালার যাতে স্পষ্ট বোঝা যায় */
+}
+
+/* "Most Popular" বা ছোট টেক্সটগুলোর জন্য */
+body.light-mode .text-yellow-400,
+body.light-mode .text-sunset-400,
+body.light-mode .stars {
+  color: #C2410C !important; /* একটু গাঢ় কমলা যাতে সাদার ওপর ফুটে ওঠে */
+}
+
+/* ২. সব "Book Now" বাটন হাইলাইট করা */
+/* এই কোডটি ডার্ক এবং লাইট উভয় মোডেই সব বাটনকে প্রিমিয়াম লুক দিবে */
+.card-lift button, 
+.room-card button,
+button.book-now-btn {
+  background: linear-gradient(135deg, #c45a00 0%, #f5901e 100%) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px rgba(196, 90, 0, 0.3) !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+}
+
+.card-lift button:hover, 
+.room-card button:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(196, 90, 0, 0.5) !important;
+  filter: brightness(1.1);
+}
+
+/* লাইট মোডে কার্ডের ভেতরের লেখা */
+body.light-mode .card-lift p,
+body.light-mode .card-lift span {
+  color: #475569 !important; /* হালকা ডার্ক গ্রে */
+}
+
+  /* বাকি সব এলিমেন্টের স্টাইল */
+  .shimmer-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(218,165,32,0.6), rgba(245,144,30,0.8), rgba(218,165,32,0.6), transparent);
+  }
+
+  .glow-badge {
+    background: rgba(8, 15, 31, 0.8) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(218,165,32,0.4);
+    box-shadow: 0 0 20px rgba(218,165,32,0.12);
+  }
+
+  body.light-mode .glow-badge {
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #7C2D12 !important;
+    border: 1px solid rgba(196, 90, 0, 0.3);
+  }
+
+  .navbar-glass {
+    background: rgba(8,15,31,0.75);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(218,165,32,0.15);
+  }
+
+  body.light-mode .navbar-glass {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(196, 90, 0, 0.15);
+  }
+
+  .search-bar {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(218,165,32,0.25);
+    backdrop-filter: blur(12px);
+  }
+
+  body.light-mode .search-bar {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(196, 90, 0, 0.3) !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  }
+
+  body.light-mode .search-bar input, body.light-mode .search-bar select {
+    color: #0F172A !important;
+  }
+
+  .card-lift { transition: all 0.3s ease; }
+  .card-lift:hover { transform: translateY(-6px); }
+
+  .gold-underline::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #daa520, #f5901e);
+    margin: 12px auto 0;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @keyframes badge-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}
+body.light-mode span[style*="color:#f5d98b"] {
+    color: #4a3321 !important; /* লাইট মোডে ডার্ক ব্রাউন কালার */
+}
+/* --- Navbar Fixes --- */
+.whitespace-nowrap {
+    white-space: nowrap !important; /* লেখা যেন ভেঙে নিচে না যায় */
+}
+
+/* --- Chatbot Tooltip Fix --- */
+#chat-btn-container {
+    position: fixed !important;
+    bottom: 25px !important;
+    right: 25px !important;
+    z-index: 9999 !important; /* যেন এটি সবার উপরে থাকে */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+}
+
+.chat-tooltip-box {
+    position: relative!important; /* অ্যাবসোলিউট থেকে রিলেটিভ করলাম যেন ফ্লেক্স কাজ করে */
+    margin-bottom: px !important; /* আইকন থেকে টেক্সটের মাঝের গ্যাপ */
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    padding: 8px 16px !important;
+    border-radius: 12px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(218,165,32,0.3) !important;
+    display: block !important; /* যেন ইনলাইন না হয়ে ব্লক হিসেবে থাকে */
+}
+
+/* টুলটিপ যেন সবকিছুর উপরে থাকে */
+.chat-tooltip-box::after {
+    content: '';
+    position: relative;
+    bottom: -8px;
+    right: 20px;
+    border-width: 8px 8px 0 8px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+/* আপনার স্টাইলের ভেতর এইটুকু যোগ বা আপডেট করুন */
+html.light-mode {
+    --bg-color: #f8fafc;
+    --text-color: #1e293b;
+    --form-bg: #ffffff;
+    --input-bg: #ffffff;
+    --border-color: #e2e8f0;
+}
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color:  #daa520;
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #4A90E2; /* ফোকাস করলে বর্ডারের রঙ বদলাবে */
+}
